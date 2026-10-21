@@ -27,6 +27,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 6. **API calls in `api/`, raw axios only.** Each feature owns `api/<action>.ts` with a plain axios call and a typed return. Hooks/components never call axios directly and never build URLs inline.
 7. **Content is data.** All copy lives in `features/<name>/content/*.ts`, typed in `features/<name>/types/`. Components receive it as props — no hardcoded strings in JSX.
 8. **Next.js 16 conventions.** Check `node_modules/next/dist/docs/` before using any framework feature. Route files use the global `PageProps`/`LayoutProps` types. Fonts via `next/font`, images via `next/image` (files in `public/`), metadata via the `Metadata` export.
+9. **Schemas own shapes.** Every validated shape (forms, API payloads) is defined once as a zod schema in `features/<name>/schema/<thing>.schema.ts` (named export). `types/` derives it with `z.infer` — never hand-write a duplicate interface. Schemas live only in `schema/`, never inline in hooks or components. Shapes without runtime validation (e.g. static content) stay plain types in `types/`.
 
 ## Folder contract
 
@@ -34,24 +35,31 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 src/
   app/
     layout.tsx            # root shell: fonts + metadata + <body> only
-    page.tsx              # "/" → renders <Home /> from @/features/home
+    (site)/               # route group: every page wearing the site chrome
+      layout.tsx          # <SiteHeader /> + {children} + <SiteFooter /> + <Toaster />
+      page.tsx            # "/" → renders <Home /> from @/features/home
     globals.css           # the single home of design tokens (:root + @theme inline)
   components/
     ui/                   # shadcn components only (CLI-generated, do not hand-edit)
-    shared/               # components used by 2+ features
+    shared/               # components used by 2+ features (e.g. site-header, site-footer)
   features/
     home/
       api/                # raw axios calls (e.g. create-appointment.ts)
       components/         # home-only components (one per section/unit)
       content/            # copy/data for home sections
       hooks/              # home-only hooks
-      types/              # home-only types
+      schema/             # zod schemas only (e.g. appointment-form.schema.ts)
+      types/              # inferred from schema/ (+ plain types for static content)
       index.tsx           # barrel + page assembly, exports <Home />
+    site/                 # site chrome: header/footer content + types + wired barrel
+      content/            # nav model, footer copy
+      types/              # site-chrome.ts
+      index.tsx           # exports <SiteHeader /> + <SiteFooter />
   lib/
     utils.ts              # shadcn cn() helper
 ```
 
-When a second feature exists (e.g. `features/blog/`), the same internal structure applies: `api/`, `components/`, `content/`, `hooks/`, `types/`, `index.tsx`.
+When a second feature exists (e.g. `features/blog/`), the same internal structure applies: `api/`, `components/`, `content/`, `hooks/`, `schema/`, `types/`, `index.tsx`.
 
 ## Verify before done
 

@@ -171,11 +171,27 @@ Primitives are used via existing variants and tokens only — never restyled int
 ## 5. Feature structure
 
 ```
+src/app/
+  (site)/
+    layout.tsx                 # site chrome: <SiteHeader /> + {children} + <SiteFooter /> + <Toaster />
+    page.tsx                   # "/" → renders <Home /> from @/features/home
+
+src/components/shared/
+  site-header.tsx              # logotype + indexed nav + pine CTA (sheet on mobile)
+  site-footer.tsx              # link columns + memberships + giant cropped wordmark
+
+src/features/site/
+  content/
+    site-header-content.ts     # nav model + CTA copy
+    site-footer-content.ts     # columns, memberships, legal, wordmark
+  types/
+    site-chrome.ts             # SiteHeaderContent, FooterContent, NavItem, FooterColumn
+  index.tsx                    # <SiteHeader /> + <SiteFooter /> pre-wired with content
+
 src/features/home/
   api/
     create-appointment.ts      # POST /appointments — axios, typed result (endpoint pending)
   components/
-    site-header.tsx            # logotype + indexed nav + pine CTA (sheet on mobile)
     hero/
       editorial-hero.tsx       # 6/5 asymmetric split, headline, actions, footnote
       hero-portrait.tsx        # arch frame + Fig. 01 caption + consultant card
@@ -187,29 +203,33 @@ src/features/home/
     journal-section.tsx        # 06 — three editorial article cards
     appointment-section.tsx    # 07 — pine band + bone form panel
     appointment-form.tsx       # form primitives + validation + sonner
-    site-footer.tsx            # link columns + memberships + giant cropped wordmark
   content/
-    site-header-content.ts
     hero-content.ts
     physician-content.ts
     expertise-content.ts
     achievements-content.ts
     journal-content.ts
     appointment-content.ts
-    footer-content.ts          # incl. the shared nav model (header + footer)
+    marquee-content.ts
   hooks/
     use-appointment-form.ts    # react-hook-form + zod wiring over api/create-appointment
+  schema/
+    appointment-form.schema.ts # zod schema — the single source of the form shape
   types/
+    appointment.ts             # z.infer from schema/ (+ AppointmentRequest/Response)
     home-content.ts            # interfaces for every section's content
   index.tsx                    # assembles sections in order; exports <Home />
 ```
 
-`src/app/page.tsx` becomes:
+Validated shapes (forms, API payloads) live as zod schemas in `schema/`; `types/` infers them
+with `z.infer` — schemas are the single source of truth (AGENTS.md rule 9).
+
+`src/app/(site)/page.tsx` becomes:
 
 ```tsx
 import { Home } from "@/features/home";
 
-export default function Page() {
+export default function HomePage() {
   return <Home />;
 }
 ```
@@ -223,7 +243,7 @@ export default function Page() {
 2. **EditorialHero** — faint vertical column hairlines behind content. Left 6 cols: gold
    eyebrow `01 — HOMEOPATHY & HOLISTIC HEALING`; 3-line display headline with *Homoeopathy*
    italic; body paragraph ≤ 46ch; hairline action row: pine button `Make an Appointment` +
-   underlined `Explore Expertise →`; footnote `* Over 43 years of clinical experience — Kanpur & Faridabad.`
+   underlined `Explore Expertise →`; footnote `* Over 45 years of clinical experience — Kanpur & Faridabad.`
    Right 5 cols, offset down: arch portrait (1px gold inset), italic Fig. 01 caption,
    overlapping bone card with hairline: `SENIOR CONSULTANT` + Accord Super Speciality
    Hospital, Sector 86, Faridabad + gold `+`.
@@ -288,9 +308,9 @@ aspect ratios + hairline frames).
 
 | Asset                          | Path                              | Ratio | Notes                    |
 | ------------------------------ | --------------------------------- | ----- | ------------------------ |
-| Hero portrait (Fig. 01)        | `/images/home/portrait-arch.jpg`  | 3:4   | Arch mask applied in CSS |
-| Clinic portrait (Fig. 02)      | `/images/home/portrait-clinic.jpg`| 4:5   | Hairline frame           |
-| Journal articles ×3            | `/images/home/journal-1..3.jpg`   | 4:3   | Duotone treatment        |
+| Hero portrait (Fig. 01)        | `/dr-renu/dr-renu-paul.jpg`       | 3:4   | Arch mask applied in CSS |
+| Clinic portrait (Fig. 02)      | `/images/home/portrait-clinic.svg`| 4:5   | Placeholder — swap for real photo |
+| Journal articles ×3            | `/images/home/journal-1..3.svg`   | 4:3   | Placeholders — swap for real photos |
 
 All via `next/image` with `sizes` set per column width.
 
@@ -299,7 +319,8 @@ All via `next/image` with `sizes` set per column width.
 1. `npx shadcn@latest init`; install the primitives in §4.
 2. Write Edition II tokens into `globals.css` (§2); delete dark-mode block.
 3. Swap fonts in `layout.tsx` to Playfair + Inter variables; update `metadata`.
-4. `content/` + `types/` for all sections (content first, components consume it).
+4. `content/` + `types/` for all sections (content first, components consume it);
+   validated shapes get a `schema/` first and `types/` infers from it.
 5. Build shared layout units: `site-header`, `site-footer`.
 6. Build sections in reading order: hero → marquee → physician → expertise →
    achievements → quote → journal → appointment.
