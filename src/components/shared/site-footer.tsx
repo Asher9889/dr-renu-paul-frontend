@@ -38,9 +38,21 @@ export function SiteFooter({ content }: SiteFooterProps) {
           {content.legal}
         </p>
 
-        <div className="mt-10 overflow-hidden" aria-hidden>
-          <p className="translate-y-[22%] select-none font-display text-[clamp(5rem,17vw,11rem)] leading-none tracking-tight text-foreground/90">
-            {content.wordmark}
+        <div className="mt-10" aria-hidden>
+          <p className="flex flex-col items-center gap-4 border-t border-border pb-8 pt-10 text-center sm:pb-10">
+            <span className="font-display text-[clamp(4rem,12vw,9rem)] uppercase leading-none">
+              {content.wordmark}
+            </span>
+            <span
+              aria-hidden
+              className="relative h-px w-full max-w-[520px] bg-border after:absolute after:inset-x-0 after:top-[5px] after:h-px after:bg-gold/35"
+            />
+            <span className="text-micro font-medium uppercase text-gold">
+              Homoeopathy · MD 
+            </span>
+            <span className="text-micro uppercase text-muted-foreground">
+              Est. 1980 · Kanpur &amp; Faridabad
+            </span>
           </p>
         </div>
       </div>

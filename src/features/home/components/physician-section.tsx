@@ -4,6 +4,7 @@ import { ArrowLink } from "@/features/home/components/arrow-link";
 import { DottedLeaderRow } from "@/features/home/components/dotted-leader-row";
 import { SectionEyebrow } from "@/features/home/components/section-eyebrow";
 import type { PhysicianContent } from "@/features/home/types/home-content";
+import { STAGGER } from "@/motion";
 
 type PhysicianSectionProps = {
   content: PhysicianContent;
@@ -47,9 +48,10 @@ export function PhysicianSection({ content }: PhysicianSectionProps) {
           ))}
 
           <div className="mt-10 flex flex-col gap-4 border-t border-border pt-8">
-            {content.education.map((row) => (
+            {content.education.map((row, index) => (
               <DottedLeaderRow
                 key={row.credential}
+                delay={index * STAGGER.rows}
                 left={
                   <span className="text-body text-foreground">
                     {row.credential}

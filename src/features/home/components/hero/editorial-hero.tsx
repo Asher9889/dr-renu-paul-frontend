@@ -1,8 +1,20 @@
+import type { CSSProperties } from "react";
+
 import { Button } from "@/components/ui/button";
 import { ArrowLink } from "@/features/home/components/arrow-link";
 import { SectionEyebrow } from "@/features/home/components/section-eyebrow";
 import { HeroPortrait } from "@/features/home/components/hero/hero-portrait";
 import type { HeroContent } from "@/features/home/types/home-content";
+
+import styles from "./hero-intro.module.css";
+
+function lineStyle(index: number) {
+  return { "--line-index": index } as CSSProperties;
+}
+
+function ruleStyle(index: number) {
+  return { "--rule-index": index } as CSSProperties;
+}
 
 type EditorialHeroProps = {
   content: HeroContent;
@@ -18,9 +30,18 @@ export function EditorialHero({ content }: EditorialHeroProps) {
           <SectionEyebrow text={content.eyebrow} />
 
           <h1 className="mt-7 font-display text-5xl leading-[0.98] tracking-tight sm:text-6xl md:text-7xl lg:text-display">
-            <span className="block">{content.headlineLead}</span>
-            <span className="block italic">{content.headlineItalic}</span>
-            <span className="block">{content.headlineTrail}</span>
+            <span className={`block ${styles.headlineLine}`} style={lineStyle(0)}>
+              {content.headlineLead}
+            </span>
+            <span
+              className={`block italic ${styles.headlineLine}`}
+              style={lineStyle(1)}
+            >
+              {content.headlineItalic}
+            </span>
+            <span className={`block ${styles.headlineLine}`} style={lineStyle(2)}>
+              {content.headlineTrail}
+            </span>
           </h1>
 
           <p className="mt-8 max-w-[46ch] text-body text-muted-foreground">
@@ -58,7 +79,8 @@ function HeroColumnLines() {
         {Array.from({ length: 12 }, (_, index) => (
           <span
             key={index}
-            className="border-l border-border/40 last:border-r"
+            className={`border-l border-border/40 last:border-r ${styles.columnRule}`}
+            style={ruleStyle(index)}
           />
         ))}
       </div>

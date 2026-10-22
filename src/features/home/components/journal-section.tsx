@@ -30,7 +30,7 @@ export function JournalSection({ content }: JournalSectionProps) {
                 <div className="relative aspect-[4/3] overflow-hidden border border-border bg-muted">
                   <Image
                     alt={post.image.alt}
-                    className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                    className="object-cover transition-transform duration-500 ease-[var(--ease-editorial)] group-hover:scale-[1.02] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
                     fill
                     sizes="(min-width: 768px) 400px, 100vw"
                     src={post.image.src}

@@ -1,6 +1,7 @@
 import { ArrowLink } from "@/features/home/components/arrow-link";
 import { SectionEyebrow } from "@/features/home/components/section-eyebrow";
 import type { ExpertiseContent } from "@/features/home/types/home-content";
+import { DrawRule, STAGGER } from "@/motion";
 
 type ExpertiseIndexProps = {
   content: ExpertiseContent;
@@ -17,7 +18,7 @@ export function ExpertiseIndex({ content }: ExpertiseIndexProps) {
         </h2>
 
         <div className="mt-14 grid grid-cols-1 gap-x-16 md:grid-cols-2">
-          {content.rows.map((row) => (
+          {content.rows.map((row, index) => (
             <div
               key={row.index}
               className="border-b border-border py-5 first:border-t md:first:border-t-0"
@@ -29,9 +30,9 @@ export function ExpertiseIndex({ content }: ExpertiseIndexProps) {
                 <span className="shrink-0 font-display text-title">
                   {row.area}
                 </span>
-                <span
-                  aria-hidden
+                <DrawRule
                   className="mb-[0.45em] min-w-6 flex-1 border-b border-dotted border-input"
+                  delay={index * STAGGER.micro}
                 />
                 <span className="hidden max-w-[24ch] shrink-0 text-right text-caption italic text-muted-foreground lg:block">
                   {row.descriptor}

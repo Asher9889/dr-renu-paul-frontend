@@ -64,6 +64,9 @@
   --text-micro--letter-spacing: 0.14em;
 
   --animate-marquee: marquee 36s linear infinite;
+
+  --ease-editorial: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-quiet: cubic-bezier(0.65, 0, 0.35, 1);
 }
 
 :root {
@@ -91,6 +94,14 @@
   --gold: #b08d57;
   --gold-soft: #c8a870;
   --clay: #c4796a;
+
+  --duration-feedback: 120ms;
+  --duration-state: 180ms;
+  --duration-reveal: 500ms;
+  --duration-mask: 800ms;
+  --duration-rule: 600ms;
+  --duration-portrait: 1200ms;
+  --duration-sprig: 1600ms;
 }
 
 @layer base {
@@ -99,11 +110,27 @@
   }
   html {
     @apply font-sans;
+    scroll-padding-top: 6rem;
   }
   body {
     @apply bg-background text-foreground;
   }
+  section[id] {
+    scroll-margin-top: 6rem;
+  }
   ::selection {
     background: rgb(176 141 87 / 0.25);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
   }
 }

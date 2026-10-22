@@ -36,7 +36,7 @@ src/
   app/
     layout.tsx            # root shell: fonts + metadata + <body> only
     (site)/               # route group: every page wearing the site chrome
-      layout.tsx          # <SiteHeader /> + {children} + <SiteFooter /> + <Toaster />
+      layout.tsx          # <MotionProvider> + <SiteHeader /> + {children} + <SiteFooter /> + <Toaster />
       page.tsx            # "/" → renders <Home /> from @/features/home
     globals.css           # the single home of design tokens (:root + @theme inline)
   components/
@@ -55,11 +55,39 @@ src/
       content/            # nav model, footer copy
       types/              # site-chrome.ts
       index.tsx           # exports <SiteHeader /> + <SiteFooter />
+  motion/                 # shared motion only: presets, provider, DrawRule, Parallax, ScrollProgress
   lib/
     utils.ts              # shadcn cn() helper
 ```
 
 When a second feature exists (e.g. `features/blog/`), the same internal structure applies: `api/`, `components/`, `content/`, `hooks/`, `schema/`, `types/`, `index.tsx`.
+
+## Motion system
+
+The site moves like a page being typeset, not like an app. Motion clarifies hierarchy and rewards reading; it never delays content, hijacks scroll, or calls attention to itself.
+
+### Where motion lives
+
+- **Feature-local motion stays in the feature.** A one-off hover, form feedback, or section-specific reveal belongs in `features/<name>/components/` (or a feature-local hook / CSS module).
+- **Shared motion lives only in `src/motion/`.** Move it there when a second feature needs it, following the rule of two.
+- Import shared motion from `@/motion`, never from deep paths. `MotionProvider` wraps the site in `(site)/layout.tsx`; do not add a second provider.
+- CSS keyframes that belong to one component live beside it in a CSS module. Shared easing, duration, stagger, and spring values live in `src/motion/presets.ts` and `src/app/globals.css`.
+
+### Tokens and presets
+
+- CSS: `--ease-editorial`, `--ease-quiet`, and `--duration-{feedback,state,reveal,mask,rule,portrait,sprig}` in `:root` (`globals.css`).
+- TypeScript: `EASE_EDITORIAL`, `EASE_QUIET`, `DURATION`, `STAGGER`, `VIEWPORT`, and `MOTION_PRESETS` from `@/motion`.
+- New motion uses these tokens. Never invent a one-off cubic-bezier or duration in a component.
+
+### Non-negotiables
+
+1. **Content first, always.** Never hide indexable text or primary imagery behind opacity, `clip-path`, `display:none`, or a delayed mount. SEO-critical copy, credentials, article titles, and contact details are painted in the first HTML response and stay visible. Animate decorative framing, transform-only settles, and interaction feedback instead.
+2. **Transform and opacity only.** Animate `transform`, `opacity`, `pathLength`, and `stroke-dashoffset`. Never animate layout properties, `filter`, `box-shadow`, or `background-position` for entrance motion.
+3. **Reduced motion is a real state.** `MotionProvider` sets `reducedMotion="user"`; CSS animations opt out inside `@media (prefers-reduced-motion: reduce)`. Motion must never be the only carrier of meaning. When reduced, show the final state immediately.
+4. **No scroll-jacking.** No pinning, horizontal scroll hijacking, scroll-triggered section replacement, or custom smooth-scroll libraries. Native anchor scrolling is enabled only when reduced motion is not requested.
+5. **Parallax is for decorative media only.** Never parallax body copy, headlines, forms, or tables. Keep travel small (≤20px) and disable it under reduced motion.
+6. **One authored moment per section.** Prefer a single deliberate gesture — a drawn rule, a settling portrait, a growing sprig — over a grid of identical fade-ups.
+7. **Performance is part of craft.** Continuously moving elements pause offscreen and on hover/focus. Do not add `will-change` preemptively; let the browser decide.
 
 ## Verify before done
 

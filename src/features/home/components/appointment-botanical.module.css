@@ -1,0 +1,6 @@
+@media (prefers-reduced-motion: reduce) {
+  .path {
+    stroke-dasharray: none !important;
+    stroke-dashoffset: 0 !important;
+  }
+}

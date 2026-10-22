@@ -1,0 +1,65 @@
+.columnRule {
+  transform-origin: top;
+  animation: draw-column var(--duration-mask) var(--ease-editorial) both;
+  animation-delay: calc(var(--rule-index) * 25ms);
+}
+
+.headlineLine {
+  animation: settle-line 700ms var(--ease-editorial) both;
+  animation-delay: calc(180ms + var(--line-index) * 80ms);
+}
+
+.archOutline {
+  stroke-dasharray: 1;
+  animation: draw-arch var(--duration-portrait) var(--ease-editorial) 350ms both;
+}
+
+.portraitImage {
+  animation: settle-portrait var(--duration-portrait) var(--ease-editorial) 300ms
+    both;
+}
+
+@keyframes draw-column {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes settle-line {
+  from {
+    transform: translateY(14px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes draw-arch {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes settle-portrait {
+  from {
+    transform: scale(1.015);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .columnRule,
+  .headlineLine,
+  .archOutline,
+  .portraitImage {
+    animation: none;
+  }
+}

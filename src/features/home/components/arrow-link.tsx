@@ -20,7 +20,7 @@ export function ArrowLink({ label, href, className }: ArrowLinkProps) {
       {label}
       <ArrowRight
         aria-hidden
-        className="size-3.5 text-gold transition-transform group-hover:translate-x-0.5"
+        className="size-3.5 text-gold transition-transform duration-[var(--duration-state)] ease-[var(--ease-quiet)] group-hover:translate-x-0.5 motion-reduce:group-hover:translate-x-0"
       />
     </a>
   );

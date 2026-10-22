@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { ArrowUpRight, Menu } from "lucide-react";
+import { motion, useMotionValueEvent, useScroll } from "motion/react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -13,9 +14,24 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import type { SiteHeaderContent } from "@/features/site/types/site-chrome";
+import { cn } from "@/lib/utils";
+import {
+  MOTION_PRESETS,
+  ScrollProgress,
+  STAGGER,
+} from "@/motion";
 
-import { Shine } from '@animate-ui/react/primitives/effects/shine';
+const sheetNavVariants = {
+  closed: {},
+  open: {
+    transition: { staggerChildren: STAGGER.micro, delayChildren: 0.04 },
+  },
+};
 
+const sheetNavItemVariants = {
+  closed: { opacity: 0, y: 8 },
+  open: { opacity: 1, y: 0, transition: MOTION_PRESETS.state },
+};
 
 type SiteHeaderProps = {
   content: SiteHeaderContent;
@@ -23,9 +39,23 @@ type SiteHeaderProps = {
 
 export function SiteHeader({ content }: SiteHeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const { scrollY } = useScroll();
+
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    const nextIsScrolled = latest > 8;
+    setIsScrolled((current) =>
+      current === nextIsScrolled ? current : nextIsScrolled,
+    );
+  });
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border bg-background/90 backdrop-blur">
+    <header
+      className={cn(
+        "sticky top-0 z-50 border-b bg-background/90 backdrop-blur transition-[background-color,border-color] duration-[var(--duration-state)] ease-[var(--ease-quiet)]",
+        isScrolled ? "border-border bg-background/95" : "border-border/60",
+      )}
+    >
       <div className="mx-auto flex h-20 w-full max-w-[1240px] items-center justify-between gap-6 px-6">
         <Link className="flex flex-col leading-none" href="/">
           <span className="font-display text-lg uppercase tracking-[0.18em]">
@@ -71,24 +101,27 @@ export function SiteHeader({ content }: SiteHeaderProps) {
               </SheetTitle>
             </SheetHeader>
 
-            <nav
+            <motion.nav
               aria-label="Mobile"
+              animate="open"
               className="mt-10 flex flex-col gap-6 px-4"
+              initial="closed"
+              variants={sheetNavVariants}
             >
               {content.navItems.map((item) => (
-                <a
+                <motion.a
                   key={item.href}
                   className="flex items-baseline gap-3 font-display text-2xl"
                   href={item.href}
                   onClick={() => setIsMenuOpen(false)}
+                  variants={sheetNavItemVariants}
                 >
                   <span className="text-micro text-gold">{item.index}</span>
                   {item.label}
-                </a>
+                </motion.a>
               ))}
-            </nav>
+            </motion.nav>
 
-            {/* <Shine asChild loop loopDelay={500}> */}
             <div className="mt-10 px-4">
               <Button asChild className="h-12 w-full text-micro uppercase">
                 <a
@@ -99,10 +132,10 @@ export function SiteHeader({ content }: SiteHeaderProps) {
                 </a>
               </Button>
             </div>
-            {/* </Shine> */}
           </SheetContent>
         </Sheet>
       </div>
+      <ScrollProgress className="absolute inset-x-0 bottom-0" />
     </header>
   );
 }

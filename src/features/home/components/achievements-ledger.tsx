@@ -11,6 +11,7 @@ import {
 import { ArrowLink } from "@/features/home/components/arrow-link";
 import { SectionEyebrow } from "@/features/home/components/section-eyebrow";
 import type { AchievementsContent } from "@/features/home/types/home-content";
+import { DrawRule } from "@/motion";
 
 type AchievementsLedgerProps = {
   content: AchievementsContent;
@@ -19,7 +20,12 @@ type AchievementsLedgerProps = {
 export function AchievementsLedger({ content }: AchievementsLedgerProps) {
   return (
     <section className="border-y border-border bg-muted" id="achievements">
-      <div className="mx-auto w-full max-w-[1240px] px-6 py-24 md:py-32">
+      <div className="relative mx-auto w-full max-w-[1240px] px-6 py-24 md:py-32">
+        <DrawRule
+          className="absolute bottom-24 left-0 top-24 hidden w-px bg-gold/25 lg:block"
+          delay={0.1}
+          orientation="vertical"
+        />
         <SectionEyebrow text={content.eyebrow} />
 
         <h2 className="mt-6 font-display text-4xl md:text-heading">

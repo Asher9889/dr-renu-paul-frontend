@@ -1,6 +1,6 @@
-import Image from "next/image";
 import { Plus } from "lucide-react";
 
+import { HeroPortraitMedia } from "@/features/home/components/hero/hero-portrait-media";
 import type { HeroContent } from "@/features/home/types/home-content";
 
 type HeroPortraitProps = {
@@ -13,16 +13,7 @@ export function HeroPortrait({ content }: HeroPortraitProps) {
   return (
     <div className="relative lg:col-span-5 lg:col-start-8">
       <figure>
-        <div className="relative aspect-[3/4] overflow-hidden rounded-t-full bg-muted ring-1 ring-gold/40 ring-inset">
-          <Image
-            alt={portrait.alt}
-            className="object-cover"
-            fill
-            priority
-            sizes="(min-width: 1024px) 480px, 100vw"
-            src={portrait.src}
-          />
-        </div>
+        <HeroPortraitMedia portrait={portrait} />
         <figcaption className="mt-3 text-caption italic text-muted-foreground">
           {portrait.caption}
         </figcaption>

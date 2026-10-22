@@ -46,6 +46,7 @@ export function AppointmentForm({ content }: AppointmentFormProps) {
       <Form {...form}>
         <form
           noValidate
+          aria-busy={isSubmitting}
           className="flex flex-col gap-6"
           onSubmit={form.handleSubmit(onSubmit)}
         >
@@ -79,11 +80,10 @@ export function AppointmentForm({ content }: AppointmentFormProps) {
                 </FormLabel>
                 <FormControl>
                   <PhoneInput
-                    placeholder="Enter phone number"
                     defaultCountry="IN"
-                    value={field.value}
                     onChange={field.onChange}
-                    // className={fieldClassName}
+                    placeholder={content.placeholders.phone}
+                    value={field.value}
                   />
                 </FormControl>
                 <FormMessage />
@@ -161,7 +161,7 @@ export function AppointmentForm({ content }: AppointmentFormProps) {
           />
 
           <Button
-            className="h-12 text-micro uppercase text-gold-soft cursor-pointer"
+            className="h-12 cursor-pointer text-micro uppercase text-gold-soft transition-[transform,background-color,color] duration-[var(--duration-feedback)] ease-[var(--ease-quiet)] active:translate-y-px motion-reduce:active:translate-y-0"
             disabled={isSubmitting}
             size="lg"
             type="submit"
