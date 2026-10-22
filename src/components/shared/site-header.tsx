@@ -14,6 +14,9 @@ import {
 } from "@/components/ui/sheet";
 import type { SiteHeaderContent } from "@/features/site/types/site-chrome";
 
+import { Shine } from '@animate-ui/react/primitives/effects/shine';
+
+
 type SiteHeaderProps = {
   content: SiteHeaderContent;
 };
@@ -85,6 +88,7 @@ export function SiteHeader({ content }: SiteHeaderProps) {
               ))}
             </nav>
 
+            {/* <Shine asChild loop loopDelay={500}> */}
             <div className="mt-10 px-4">
               <Button asChild className="h-12 w-full text-micro uppercase">
                 <a
@@ -95,6 +99,7 @@ export function SiteHeader({ content }: SiteHeaderProps) {
                 </a>
               </Button>
             </div>
+            {/* </Shine> */}
           </SheetContent>
         </Sheet>
       </div>
