@@ -2,7 +2,7 @@ import Image from "next/image";
 
 import { ArrowLink } from "@/features/home/components/arrow-link";
 import { DottedLeaderRow } from "@/features/home/components/dotted-leader-row";
-import { SectionEyebrow } from "@/features/home/components/section-eyebrow";
+import { SectionEyebrow } from "@/components/shared/section-eyebrow";
 import type { PhysicianContent } from "@/features/home/types/home-content";
 import { STAGGER } from "@/motion";
 

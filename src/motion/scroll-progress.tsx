@@ -1,9 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 import { motion, useReducedMotion, useScroll, useSpring } from "motion/react";
 
 import { cn } from "@/lib/utils";
+
+function subscribeToMount() {
+  return () => {};
+}
 
 type ScrollProgressProps = {
   className?: string;
@@ -12,7 +16,11 @@ type ScrollProgressProps = {
 export function ScrollProgress({ className }: ScrollProgressProps) {
   const { scrollYProgress } = useScroll();
   const prefersReducedMotion = useReducedMotion();
-  const [hasMounted, setHasMounted] = useState(false);
+  const hasMounted = useSyncExternalStore(
+    subscribeToMount,
+    () => true,
+    () => false,
+  );
   const smoothProgress = useSpring(scrollYProgress, {
     stiffness: 120,
     damping: 30,
@@ -20,10 +28,6 @@ export function ScrollProgress({ className }: ScrollProgressProps) {
   });
   const shouldUseDirectProgress = hasMounted && prefersReducedMotion;
   const scaleX = shouldUseDirectProgress ? scrollYProgress : smoothProgress;
-
-  useEffect(() => {
-    setHasMounted(true);
-  }, []);
 
   return (
     <motion.div

@@ -2,7 +2,7 @@ import type { CSSProperties } from "react";
 
 import { Button } from "@/components/ui/button";
 import { ArrowLink } from "@/features/home/components/arrow-link";
-import { SectionEyebrow } from "@/features/home/components/section-eyebrow";
+import { SectionEyebrow } from "@/components/shared/section-eyebrow";
 import { HeroPortrait } from "@/features/home/components/hero/hero-portrait";
 import type { HeroContent } from "@/features/home/types/home-content";
 

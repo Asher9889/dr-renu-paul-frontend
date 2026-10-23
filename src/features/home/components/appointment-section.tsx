@@ -1,6 +1,6 @@
 import { AppointmentForm } from "@/features/home/components/appointment-form";
 import { BotanicalSprig } from "@/features/home/components/appointment-botanical";
-import { SectionEyebrow } from "@/features/home/components/section-eyebrow";
+import { SectionEyebrow } from "@/components/shared/section-eyebrow";
 import type { AppointmentContent } from "@/features/home/types/home-content";
 
 type AppointmentSectionProps = {

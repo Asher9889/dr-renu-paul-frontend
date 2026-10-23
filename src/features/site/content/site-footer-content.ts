@@ -6,20 +6,20 @@ export const siteFooterContent: FooterContent = {
       index: "01",
       title: "Explore",
       links: [
-        { label: "About", href: "#physician" },
-        { label: "Expertise", href: "#expertise" },
-        { label: "Achievements", href: "#achievements" },
-        { label: "Journal", href: "#journal" },
+        { label: "About", href: "/#physician" },
+        { label: "Expertise", href: "/#expertise" },
+        { label: "Achievements", href: "/#achievements" },
+        { label: "Journal", href: "/blog" },
       ],
     },
     {
       index: "02",
       title: "Practice",
       links: [
-        { label: "Consultations", href: "#contact" },
-        { label: "Clinic Hours", href: "#contact" },
-        { label: "Kanpur, Uttar Pradesh", href: "#contact" },
-        { label: "Faridabad, Haryana", href: "#contact" },
+        { label: "Consultations", href: "/#contact" },
+        { label: "Clinic Hours", href: "/#contact" },
+        { label: "Kanpur, Uttar Pradesh", href: "/#contact" },
+        { label: "Faridabad, Haryana", href: "/#contact" },
       ],
     },
     {
@@ -28,19 +28,19 @@ export const siteFooterContent: FooterContent = {
       links: [
         {
           label: "Women's Homoeopathic Organization",
-          href: "#achievements",
+          href: "/#achievements",
         },
         {
           label: "National Academy of Homoeopathy",
-          href: "#achievements",
+          href: "/#achievements",
         },
         {
           label: "Asian Homoeopathic Medical League",
-          href: "#achievements",
+          href: "/#achievements",
         },
         {
           label: "Homoeopathic Medical Association of India",
-          href: "#achievements",
+          href: "/#achievements",
         },
       ],
     },

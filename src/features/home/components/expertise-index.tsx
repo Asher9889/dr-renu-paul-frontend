@@ -1,5 +1,5 @@
 import { ArrowLink } from "@/features/home/components/arrow-link";
-import { SectionEyebrow } from "@/features/home/components/section-eyebrow";
+import { SectionEyebrow } from "@/components/shared/section-eyebrow";
 import type { ExpertiseContent } from "@/features/home/types/home-content";
 import { DrawRule, STAGGER } from "@/motion";
 

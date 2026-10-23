@@ -2,7 +2,7 @@ import Image from "next/image";
 
 import { Badge } from "@/components/ui/badge";
 import { ArrowLink } from "@/features/home/components/arrow-link";
-import { SectionEyebrow } from "@/features/home/components/section-eyebrow";
+import { SectionEyebrow } from "@/components/shared/section-eyebrow";
 import { cn } from "@/lib/utils";
 import type { JournalContent } from "@/features/home/types/home-content";
 

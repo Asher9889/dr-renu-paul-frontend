@@ -13,7 +13,7 @@ export const journalContent: JournalContent = {
         src: "/images/home/journal-1.svg",
         alt: "Botanical line illustration for the women's health essay",
       },
-      href: "#journal",
+      href: "/blog/holistic-management-of-pcod",
     },
     {
       category: "Mind & Mood",
@@ -24,7 +24,7 @@ export const journalContent: JournalContent = {
         src: "/images/home/journal-2.svg",
         alt: "Botanical line illustration for the mind and mood essay",
       },
-      href: "#journal",
+      href: "/blog/constitutional-treatment-for-autoimmune-stress",
     },
     {
       category: "Child Care",
@@ -35,7 +35,7 @@ export const journalContent: JournalContent = {
         src: "/images/home/journal-3.svg",
         alt: "Botanical line illustration for the child care essay",
       },
-      href: "#journal",
+      href: "/blog/gentle-paediatric-remedies",
     },
   ],
 };
