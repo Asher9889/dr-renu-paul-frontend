@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { tiptapDocumentSchema } from "@/features/admin-blog/schema/tiptap-document.schema";
+import { tiptapDocumentSchema } from "@/features/blog/schema/tiptap-document.schema";
 
 export const BLOG_SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 

@@ -1,10 +1,4 @@
-import {
-  BlogPostPage,
-  buildBlogPostMetadata,
-  getBlogStaticParams,
-} from "@/features/blog";
-
-export const generateStaticParams = getBlogStaticParams;
+import { BlogPostPage, buildBlogPostMetadata } from "@/features/blog";
 
 export function generateMetadata({ params }: PageProps<"/blog/[slug]">) {
   return buildBlogPostMetadata(params);

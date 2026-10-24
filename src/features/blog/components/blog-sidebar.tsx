@@ -4,12 +4,12 @@ import { BlogTableOfContents } from "@/features/blog/components/blog-table-of-co
 import type {
   BlogAuthor,
   BlogDetailContent,
-  BlogHeadingBlock,
+  BlogTocItem,
 } from "@/features/blog/types/blog";
 
 type BlogSidebarProps = {
   author: BlogAuthor;
-  headings: BlogHeadingBlock[];
+  headings: BlogTocItem[];
   content: BlogDetailContent;
 };
 
@@ -20,13 +20,14 @@ export function BlogSidebar({
 }: BlogSidebarProps) {
   return (
     <div className="sticky top-28 space-y-8">
-      <BlogAuthorCard author={author} label={content.authorLabel} />
+      <BlogAuthorCard
+        author={author}
+        key={author.avatar.url}
+        label={content.authorLabel}
+      />
 
       <div className="border border-border bg-card p-6">
-        <BlogTableOfContents
-          items={headings}
-          label={content.tocLabel}
-        />
+        <BlogTableOfContents items={headings} label={content.tocLabel} />
       </div>
 
       <BlogAppointmentCard content={content.appointment} />

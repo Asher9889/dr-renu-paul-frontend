@@ -2,11 +2,11 @@
 
 import { useEffect, useState } from "react";
 
-import type { BlogHeadingBlock } from "@/features/blog/types/blog";
+import type { BlogTocItem } from "@/features/blog/types/blog";
 import { cn } from "@/lib/utils";
 
 type BlogTableOfContentsProps = {
-  items: BlogHeadingBlock[];
+  items: BlogTocItem[];
   label: string;
   className?: string;
   showLabel?: boolean;

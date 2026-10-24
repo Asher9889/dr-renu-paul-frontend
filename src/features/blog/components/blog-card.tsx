@@ -3,14 +3,18 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
-import type { BlogPost } from "@/features/blog/types/blog";
+import { formatBlogDate } from "@/features/blog/lib/format-blog-date";
+import type { BlogPostSummary } from "@/features/blog/types/blog";
 
 type BlogCardProps = {
-  post: BlogPost;
+  post: BlogPostSummary;
   index: number;
 };
 
 export function BlogCard({ post, index }: BlogCardProps) {
+  const date = formatBlogDate(post.publishedAt);
+  const primaryTag = post.tags[0];
+
   return (
     <Link
       className="group flex h-full flex-col border-b border-r border-border bg-background p-5 transition-colors duration-[var(--duration-state)] ease-[var(--ease-quiet)] hover:bg-card md:p-7"
@@ -19,21 +23,25 @@ export function BlogCard({ post, index }: BlogCardProps) {
     >
       <div className="relative aspect-[4/3] overflow-hidden border border-border bg-muted">
         <Image
-          alt={post.thumbnail.alt}
+          alt={post.cover.alt}
           className="object-cover transition-transform duration-[var(--duration-reveal)] ease-[var(--ease-editorial)] group-hover:scale-[1.02] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
           fill
           sizes="(min-width: 1024px) 400px, (min-width: 768px) 50vw, 100vw"
-          src={post.thumbnail.src}
+          src={post.cover.url}
         />
       </div>
 
       <div className="mt-5 flex items-center justify-between gap-4">
-        <Badge
-          className="h-auto rounded-sm px-2 py-1 text-micro uppercase text-muted-foreground"
-          variant="secondary"
-        >
-          {post.tags[0]}
-        </Badge>
+        {primaryTag ? (
+          <Badge
+            className="h-auto rounded-sm px-2 py-1 text-micro uppercase text-muted-foreground"
+            variant="secondary"
+          >
+            {primaryTag.name}
+          </Badge>
+        ) : (
+          <span />
+        )}
         <span className="text-micro tabular-nums text-gold">
           ({String(index + 1).padStart(2, "0")})
         </span>
@@ -44,15 +52,15 @@ export function BlogCard({ post, index }: BlogCardProps) {
       </h2>
 
       <p className="mt-2 line-clamp-3 text-caption text-muted-foreground">
-        {post.description}
+        {post.excerpt}
       </p>
 
       <div className="mt-auto flex items-center justify-between gap-4 pt-6">
         <time
           className="text-caption tabular-nums text-muted-foreground"
-          dateTime={post.date.iso}
+          dateTime={date.iso}
         >
-          {post.date.label}
+          {date.label}
         </time>
         <ArrowUpRight
           aria-hidden

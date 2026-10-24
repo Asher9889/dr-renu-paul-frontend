@@ -12,4 +12,7 @@ export const blogListingContent: BlogListingContent = {
   allTagLabel: "All",
   emptyMessage: "There are no notes in this subject yet.",
   emptyActionLabel: "All notes",
+  paginationLabel: "Browse the journal",
+  newerLabel: "Newer notes",
+  olderLabel: "Older notes",
 };

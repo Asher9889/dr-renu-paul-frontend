@@ -12,21 +12,26 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { buildBlogListingHref } from "@/features/blog/lib/blog-listing";
 import type { BlogTagSummary } from "@/features/blog/types/blog";
 import { cn } from "@/lib/utils";
 
 type BlogMobileTagFilterProps = {
   tags: BlogTagSummary[];
-  selectedTag: string;
+  selectedTagSlug: string | null;
+  selectedTagName: string;
   selectedCount: number;
+  totalPublishedPosts: number;
   allTagLabel: string;
   label: string;
 };
 
 export function BlogMobileTagFilter({
   tags,
-  selectedTag,
+  selectedTagSlug,
+  selectedTagName,
   selectedCount,
+  totalPublishedPosts,
   allTagLabel,
   label,
 }: BlogMobileTagFilterProps) {
@@ -38,7 +43,7 @@ export function BlogMobileTagFilter({
           variant="outline"
         >
           <span className="flex items-baseline gap-2">
-            {selectedTag}
+            {selectedTagName}
             <span className="tabular-nums text-gold">{selectedCount}</span>
           </span>
           <ChevronDown aria-hidden className="size-4 text-muted-foreground" />
@@ -60,11 +65,37 @@ export function BlogMobileTagFilter({
           aria-label={label}
           className="flex min-h-0 flex-col overflow-y-auto px-4 pb-8"
         >
+          <SheetClose asChild>
+            <Link
+              aria-current={selectedTagSlug ? undefined : "page"}
+              className={cn(
+                "flex items-baseline justify-between gap-4 border-b border-border py-3.5 text-body transition-colors",
+                selectedTagSlug
+                  ? "text-muted-foreground hover:text-foreground"
+                  : "text-foreground",
+              )}
+              href={buildBlogListingHref(null, 1)}
+              prefetch
+            >
+              <span
+                className={cn(
+                  "decoration-gold/60 underline-offset-4",
+                  selectedTagSlug ? undefined : "underline",
+                )}
+              >
+                {allTagLabel}
+              </span>
+              <span className="text-caption tabular-nums text-gold">
+                {totalPublishedPosts}
+              </span>
+            </Link>
+          </SheetClose>
+
           {tags.map((tag) => {
-            const isSelected = tag.tag === selectedTag;
+            const isSelected = tag.slug === selectedTagSlug;
 
             return (
-              <SheetClose asChild key={tag.tag}>
+              <SheetClose asChild key={tag.slug}>
                 <Link
                   aria-current={isSelected ? "page" : undefined}
                   className={cn(
@@ -73,11 +104,7 @@ export function BlogMobileTagFilter({
                       ? "text-foreground"
                       : "text-muted-foreground hover:text-foreground",
                   )}
-                  href={
-                    tag.tag === allTagLabel
-                      ? "/blog"
-                      : `/blog?tag=${encodeURIComponent(tag.tag)}`
-                  }
+                  href={buildBlogListingHref(tag.slug, 1)}
                   prefetch
                 >
                   <span
@@ -86,7 +113,7 @@ export function BlogMobileTagFilter({
                       isSelected && "underline",
                     )}
                   >
-                    {tag.tag}
+                    {tag.name}
                   </span>
                   <span className="text-caption tabular-nums text-gold">
                     {tag.count}

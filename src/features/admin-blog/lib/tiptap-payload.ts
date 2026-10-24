@@ -1,6 +1,6 @@
 import type { JSONContent } from "@tiptap/react";
 
-import { tiptapDocumentSchema } from "@/features/admin-blog/schema/tiptap-document.schema";
+import { tiptapDocumentSchema } from "@/features/blog/schema/tiptap-document.schema";
 import type { TiptapDocument } from "@/features/admin-blog/types/blog";
 import { slugify } from "@/features/admin-blog/lib/slugify";
 

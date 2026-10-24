@@ -2,18 +2,20 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
 import { BlogCard } from "@/features/blog/components/blog-card";
-import type { BlogPost } from "@/features/blog/types/blog";
+import type { BlogPostSummary } from "@/features/blog/types/blog";
 
 type BlogGridProps = {
-  posts: BlogPost[];
+  posts: BlogPostSummary[];
   emptyMessage: string;
   emptyActionLabel: string;
+  startIndex?: number;
 };
 
 export function BlogGrid({
   posts,
   emptyMessage,
   emptyActionLabel,
+  startIndex = 0,
 }: BlogGridProps) {
   if (posts.length === 0) {
     return (
@@ -33,7 +35,7 @@ export function BlogGrid({
   return (
     <div className="grid grid-cols-1 border-l border-t border-border md:grid-cols-2 lg:grid-cols-3">
       {posts.map((post, index) => (
-        <BlogCard index={index} key={post.slug} post={post} />
+        <BlogCard index={startIndex + index} key={post.slug} post={post} />
       ))}
     </div>
   );

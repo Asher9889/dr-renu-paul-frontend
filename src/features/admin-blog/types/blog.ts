@@ -14,7 +14,7 @@ import type {
   CreateBlogPostPayload,
   UpdateBlogPostPayload,
 } from "@/features/admin-blog/schema/blog-post-payload.schema";
-import type { TiptapDocument } from "@/features/admin-blog/schema/tiptap-document.schema";
+import type { TiptapDocument } from "@/features/blog/schema/tiptap-document.schema";
 
 export type {
   CreateBlogPostPayload,

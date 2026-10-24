@@ -12,10 +12,10 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { BlogTableOfContents } from "@/features/blog/components/blog-table-of-contents";
-import type { BlogHeadingBlock } from "@/features/blog/types/blog";
+import type { BlogTocItem } from "@/features/blog/types/blog";
 
 type BlogMobileTocProps = {
-  items: BlogHeadingBlock[];
+  items: BlogTocItem[];
   label: string;
 };
 

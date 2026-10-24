@@ -3,14 +3,23 @@ import { ArrowLeft } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import type { BlogDetailContent, BlogPost } from "@/features/blog/types/blog";
+import {
+  formatBlogDate,
+  formatReadingTime,
+} from "@/features/blog/lib/format-blog-date";
+import type {
+  BlogDetailContent,
+  BlogPostDetail,
+} from "@/features/blog/types/blog";
 
 type BlogPostHeaderProps = {
-  post: BlogPost;
+  post: BlogPostDetail;
   content: BlogDetailContent;
 };
 
 export function BlogPostHeader({ post, content }: BlogPostHeaderProps) {
+  const date = formatBlogDate(post.publishedAt);
+
   return (
     <section className="border-b border-border">
       <div className="mx-auto w-full max-w-[1240px] px-6 py-14 md:py-20">
@@ -25,19 +34,19 @@ export function BlogPostHeader({ post, content }: BlogPostHeaderProps) {
             {post.tags.map((tag) => (
               <Badge
                 className="h-auto rounded-sm px-2 py-1 text-micro uppercase text-muted-foreground"
-                key={tag}
+                key={tag.slug}
                 variant="secondary"
               >
-                {tag}
+                {tag.name}
               </Badge>
             ))}
           </div>
 
           <time
             className="text-caption font-medium tabular-nums text-muted-foreground"
-            dateTime={post.date.iso}
+            dateTime={date.iso}
           >
-            {post.date.label}
+            {date.label}
           </time>
 
           <span aria-hidden className="text-muted-foreground">
@@ -45,7 +54,7 @@ export function BlogPostHeader({ post, content }: BlogPostHeaderProps) {
           </span>
 
           <span className="text-caption text-muted-foreground">
-            {post.readTime}
+            {formatReadingTime(post.readingTimeMinutes)}
           </span>
         </div>
 
@@ -54,7 +63,7 @@ export function BlogPostHeader({ post, content }: BlogPostHeaderProps) {
         </h1>
 
         <p className="mt-6 max-w-[62ch] text-body text-muted-foreground md:text-subheading md:leading-snug">
-          {post.description}
+          {post.excerpt}
         </p>
       </div>
     </section>
