@@ -80,7 +80,7 @@ export function SiteHeader({ content }: SiteHeaderProps) {
         </nav>
 
         <div className="hidden md:block">
-          <Button asChild className="h-11 px-5 text-micro uppercase text-gold-soft" size="lg">
+          <Button asChild className="h-11 px-5 text-micro uppercase text-card" size="lg">
             <a href={content.cta.href}>
               {content.cta.label}
               <ArrowUpRight aria-hidden className="size-3.5" />
@@ -123,7 +123,7 @@ export function SiteHeader({ content }: SiteHeaderProps) {
             </motion.nav>
 
             <div className="mt-10 px-4">
-              <Button asChild className="h-12 w-full text-micro uppercase">
+              <Button asChild className="h-12 w-full text-card uppercase">
                 <a
                   href={content.cta.href}
                   onClick={() => setIsMenuOpen(false)}

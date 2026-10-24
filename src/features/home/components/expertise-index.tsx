@@ -27,7 +27,7 @@ export function ExpertiseIndex({ content }: ExpertiseIndexProps) {
                 <span className="shrink-0 text-caption tabular-nums text-gold">
                   {row.index}
                 </span>
-                <span className="shrink-0 font-display text-title">
+                <span className="min-w-0 font-display text-title">
                   {row.area}
                 </span>
                 <DrawRule

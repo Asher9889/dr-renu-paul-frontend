@@ -28,9 +28,7 @@ import {
 } from "@/features/blog/content/blog-posts-content";
 import type { BlogTagSummary } from "@/features/blog/types/blog";
 
-type BlogSearchParams = Promise<
-  Record<string, string | string[] | undefined>
->;
+type BlogSearchParams = Promise<Record<string, string | string[] | undefined>>;
 
 type BlogListingProps = {
   searchParams: BlogSearchParams;

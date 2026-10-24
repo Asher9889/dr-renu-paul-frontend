@@ -49,7 +49,7 @@ export function EditorialHero({ content }: EditorialHeroProps) {
           </p>
 
           <div className="mt-10 flex flex-wrap items-center gap-x-10 gap-y-5 border-t border-border pt-8">
-            <Button asChild className="h-12 px-6 text-micro uppercase text-gold-soft" size="lg">
+            <Button asChild className="h-12 px-6 text-micro uppercase text-card" size="lg">
               <a href={content.primaryAction.href}>{content.primaryAction.label}</a>
             </Button>
             <ArrowLink
