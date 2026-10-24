@@ -1,22 +1,19 @@
-import axios from "axios";
-
+import { apiEndpoints, buildApiPath } from "@/config/apiEndPoints";
+import apiClient from "@/config/axios";
 import type {
   AppointmentRequest,
   AppointmentResponse,
 } from "@/features/home/types/appointment";
 
-const appointmentsEndpoint = process.env.NEXT_PUBLIC_APPOINTMENTS_API_URL;
-
-export async function createAppointment(request: AppointmentRequest): Promise<AppointmentResponse> {
-  console.log("Creating appointment with request:", request);
-  if (!appointmentsEndpoint) {
-    return { ok: true };
-  }
-
-  const { data } = await axios.post<AppointmentResponse>(
-    appointmentsEndpoint,
-    request,
-  );
+export async function createAppointment(
+  request: AppointmentRequest,
+): Promise<AppointmentResponse> {
+  const endpoint = apiEndpoints.appointments.create;
+  const { data } = await apiClient.request<AppointmentResponse>({
+    method: endpoint.method,
+    url: buildApiPath(endpoint.path),
+    data: request,
+  });
 
   return data;
 }

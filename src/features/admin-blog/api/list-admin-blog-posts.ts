@@ -1,6 +1,5 @@
-import axios from "axios";
-
-import { adminBlogPostsEndpoint } from "@/features/admin-blog/api/admin-blog-config";
+import { apiEndpoints, buildApiPath } from "@/config/apiEndPoints";
+import apiClient from "@/config/axios";
 import { adminBlogPostListResponseSchema } from "@/features/admin-blog/schema/blog-entities.schema";
 import type {
   AdminBlogListQuery,
@@ -10,7 +9,10 @@ import type {
 export async function listAdminBlogPosts(
   query: AdminBlogListQuery,
 ): Promise<AdminBlogListResult> {
-  const response = await axios.get(adminBlogPostsEndpoint, {
+  const endpoint = apiEndpoints.adminBlog.posts.list;
+  const response = await apiClient.request({
+    method: endpoint.method,
+    url: buildApiPath(endpoint.path),
     params: {
       status: query.status,
       q: query.q?.trim() ? query.q.trim() : undefined,

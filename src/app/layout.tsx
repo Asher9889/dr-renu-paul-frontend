@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import { Inter, Playfair_Display, Literata } from "next/font/google";
+
+import { QueryProvider } from "@/components/shared/query-provider";
+
 import "./globals.css";
 
 const inter = Inter({
@@ -31,11 +34,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${inter.variable} ${playfair.variable} ${literata.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <QueryProvider>{children}</QueryProvider>
+      </body>
     </html>
   );
 }
 
 /**
- * keeping root layout.tsx to fonts + metadata + <body>
+ * Root shell: fonts, metadata, global providers, and <body>.
  */

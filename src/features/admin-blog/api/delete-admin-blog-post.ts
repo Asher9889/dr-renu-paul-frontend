@@ -1,7 +1,11 @@
-import axios from "axios";
-
-import { adminBlogPostsEndpoint } from "@/features/admin-blog/api/admin-blog-config";
+import { apiEndpoints, buildApiPath } from "@/config/apiEndPoints";
+import apiClient from "@/config/axios";
 
 export async function deleteAdminBlogPost(id: string): Promise<void> {
-  await axios.delete(`${adminBlogPostsEndpoint}/${encodeURIComponent(id)}`);
+  const endpoint = apiEndpoints.adminBlog.posts.remove;
+
+  await apiClient.request({
+    method: endpoint.method,
+    url: buildApiPath(endpoint.path, { id }),
+  });
 }

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { AdminQueryProvider } from "@/features/admin-blog/components/admin-query-provider";
+import { AdminUiProvider } from "@/features/admin-blog/components/admin-ui-provider";
 
 export const metadata: Metadata = {
   title: {
@@ -16,5 +16,5 @@ export const metadata: Metadata = {
 };
 
 export default function AdminRootLayout({ children }: LayoutProps<"/">) {
-  return <AdminQueryProvider>{children}</AdminQueryProvider>;
+  return <AdminUiProvider>{children}</AdminUiProvider>;
 }

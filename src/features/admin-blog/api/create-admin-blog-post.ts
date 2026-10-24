@@ -1,6 +1,5 @@
-import axios from "axios";
-
-import { adminBlogPostsEndpoint } from "@/features/admin-blog/api/admin-blog-config";
+import { apiEndpoints, buildApiPath } from "@/config/apiEndPoints";
+import apiClient from "@/config/axios";
 import { adminBlogPostResponseSchema } from "@/features/admin-blog/schema/blog-entities.schema";
 import type {
   AdminBlogPostDetail,
@@ -10,7 +9,12 @@ import type {
 export async function createAdminBlogPost(
   payload: CreateBlogPostPayload,
 ): Promise<AdminBlogPostDetail> {
-  const response = await axios.post(adminBlogPostsEndpoint, payload);
+  const endpoint = apiEndpoints.adminBlog.posts.create;
+  const response = await apiClient.request({
+    method: endpoint.method,
+    url: buildApiPath(endpoint.path),
+    data: payload,
+  });
 
   return adminBlogPostResponseSchema.parse(response.data).data;
 }
