@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { Badge } from "@/components/ui/badge";
 import { BlogCoverThumb } from "@/features/admin-blog/components/blog-cover-thumb";
 import { BlogPostRowActions } from "@/features/admin-blog/components/blog-post-row-actions";
 import { BlogPostTags } from "@/features/admin-blog/components/blog-post-tags";
@@ -40,6 +41,14 @@ export function BlogPostCard({ post, content }: BlogPostCardProps) {
         </p>
         <div className="mt-3 flex flex-wrap items-center gap-2">
           <BlogStatusBadge labels={content.statusLabels} status={post.status} />
+          {post.featured ? (
+            <Badge
+              className="h-auto rounded-sm px-2 py-0.5 text-micro uppercase text-gold"
+              variant="secondary"
+            >
+              {copy.row.featured}
+            </Badge>
+          ) : null}
           <BlogPostTags
             maxVisible={1}
             tags={post.tags}

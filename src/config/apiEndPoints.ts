@@ -24,6 +24,10 @@ export const apiEndpoints = {
       method: HTTP_METHOD.GET,
       path: "/blog/posts",
     },
+    featured: {
+      method: HTTP_METHOD.GET,
+      path: "/blog/featured",
+    },
     post: {
       method: HTTP_METHOD.GET,
       path: "/blog/posts/:slug",

@@ -12,6 +12,7 @@ export function getEmptyBlogPostFormValues(): BlogPostFormValues {
     },
     cover: null,
     tags: [],
+    featured: false,
   };
 }
 
@@ -30,5 +31,6 @@ export function getBlogPostFormValues(
         }
       : null,
     tags: post.tags.map((tag) => tag.name),
+    featured: post.featured,
   };
 }

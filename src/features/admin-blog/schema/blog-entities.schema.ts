@@ -40,6 +40,7 @@ export const adminBlogPostSummarySchema = z.object({
   cover: blogCoverSchema.nullable(),
   tags: z.array(blogTagSchema),
   status: blogPostStatusSchema,
+  featured: z.boolean(),
   publishedAt: z.string().nullable(),
   readingTimeMinutes: z.number(),
   createdAt: z.string(),

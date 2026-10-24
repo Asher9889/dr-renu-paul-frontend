@@ -72,6 +72,7 @@ export const adminBlogContent = {
       delete: "Delete",
       openMenu: "Open note actions",
       readingTimeSuffix: "min read",
+      featured: "Featured",
     },
     dialogs: {
       publishTitle: "Publish this note?",
@@ -194,6 +195,9 @@ export const adminBlogContent = {
     },
     publication: {
       eyebrow: "II — Publication",
+      featuredLabel: "Featured on home",
+      featuredHelper:
+        "The three most recent featured notes appear in Recent Writing once published.",
       checklistTitle: "Before publishing",
       checklist: {
         title: "A title",

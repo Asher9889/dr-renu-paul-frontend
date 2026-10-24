@@ -39,6 +39,7 @@ export const createBlogPostPayloadSchema = z
     tags: z
       .array(z.string().trim().min(1).max(60))
       .max(20, "A post can have at most 20 tags."),
+    featured: z.boolean().optional(),
   })
   .strict();
 

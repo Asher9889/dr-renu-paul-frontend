@@ -59,18 +59,12 @@ export type QuoteContent = {
   attribution: string;
 };
 
-export type JournalPost = {
-  category: string;
-  title: string;
-  excerpt: string;
-  image: { src: string; alt: string };
-  href: string;
-};
-
 export type JournalContent = {
   eyebrow: string;
   heading: string;
-  posts: JournalPost[];
+  emptyMessage: string;
+  emptyActionLabel: string;
+  defaultCategory: string;
 };
 
 export type AppointmentDetail = {

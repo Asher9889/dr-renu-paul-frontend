@@ -17,6 +17,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { getAdminBlogError } from "@/features/admin-blog/api/get-admin-blog-error";
 import { BlogCoverField } from "@/features/admin-blog/components/blog-cover-field";
@@ -72,6 +73,7 @@ const formFieldNames = [
   "content",
   "cover",
   "tags",
+  "featured",
 ] as const;
 
 export function BlogPostForm({ post }: BlogPostFormProps) {
@@ -461,6 +463,29 @@ export function BlogPostForm({ post }: BlogPostFormProps) {
                           onChange={field.onChange}
                           value={field.value}
                         />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="featured"
+                    render={({ field }) => (
+                      <FormItem className="flex items-start justify-between gap-4 border-t border-border pt-6">
+                        <div className="space-y-1">
+                          <FormLabel className="text-micro uppercase text-muted-foreground">
+                            {content.publication.featuredLabel}
+                          </FormLabel>
+                          <p className="text-caption text-muted-foreground">
+                            {content.publication.featuredHelper}
+                          </p>
+                        </div>
+                        <FormControl>
+                          <Switch
+                            checked={field.value}
+                            onCheckedChange={field.onChange}
+                          />
+                        </FormControl>
                       </FormItem>
                     )}
                   />

@@ -63,6 +63,7 @@ export const blogPostFormSchema = z.object({
         .max(60, "Tags must be 60 characters or fewer."),
     )
     .max(20, "A note can have at most 20 tags."),
+  featured: z.boolean(),
 });
 
 export type BlogPostFormValues = z.infer<typeof blogPostFormSchema>;

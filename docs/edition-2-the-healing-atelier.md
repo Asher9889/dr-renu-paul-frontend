@@ -268,8 +268,9 @@ export default function HomePage() {
    `Homoeopathy never fails — some Homoeopaths may fail sometimes. Dr. Renu too.`;
    attribution `— DR. RENU PAUL, MD (HOM.)`.
 8. **JournalSection** — eyebrow `06 — RECENT WRITING`; heading `Notes on healing.`;
-   three borderless cards: 4:3 image with hairline frame, gold small-caps category,
-   Playfair title, one-line excerpt, `Read →`. Middle card offset upward.
+   three borderless cards from the featured journal API: 4:3 cover image with hairline
+   frame, gold small-caps category, Playfair title, one-line excerpt, `Read →`. Middle
+   card offset upward. Only published notes marked `featured` appear here.
 9. **AppointmentSection** — full-bleed pine with 4% botanical line art + grain overlay.
    Left: bone Playfair `Begin your healing, quietly.`; body copy; hairline-separated hours
    and locations; phone in large Playfair tabular numerals. Right: bone panel form
@@ -310,7 +311,7 @@ aspect ratios + hairline frames).
 | ------------------------------ | --------------------------------- | ----- | ------------------------ |
 | Hero portrait (Fig. 01)        | `/dr-renu/dr-renu-paul.jpg`       | 3:4   | Arch mask applied in CSS |
 | Clinic portrait (Fig. 02)      | `/images/home/portrait-clinic.svg`| 4:5   | Placeholder — swap for real photo |
-| Journal articles ×3            | `/images/home/journal-1..3.svg`   | 4:3   | Placeholders — swap for real photos |
+| Journal articles ×3            | Featured post cover URLs          | 4:3   | Managed in Journal Studio           |
 
 All via `next/image` with `sizes` set per column width.
 
@@ -330,6 +331,6 @@ All via `next/image` with `sizes` set per column width.
 
 ## 11. Explicit non-goals (v1)
 
-- No blog detail routes, no CMS — journal entries are static content data.
+- Journal entries come from the blog API; Journal Studio owns featured selection.
 - No dark mode.
 - No shadows, gradients, or rounded-pill clusters anywhere (see §1 design laws).

@@ -62,6 +62,13 @@ export const publicBlogPostListResponseSchema = z.object({
   meta: publicBlogPageMetaSchema,
 });
 
+export const publicBlogFeaturedResponseSchema = z.object({
+  success: z.literal(true),
+  message: z.string(),
+  statusCode: z.number().optional(),
+  data: z.array(publicBlogPostSummarySchema),
+});
+
 export const publicBlogPostResponseSchema = z.object({
   success: z.literal(true),
   message: z.string(),

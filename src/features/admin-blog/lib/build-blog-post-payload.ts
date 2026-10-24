@@ -39,5 +39,6 @@ export function buildBlogPostPayload(
     content: toTiptapDocument(values.content),
     cover,
     tags,
+    featured: values.featured,
   });
 }
