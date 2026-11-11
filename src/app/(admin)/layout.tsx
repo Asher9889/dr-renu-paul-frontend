@@ -4,10 +4,10 @@ import { AdminUiProvider } from "@/features/admin-blog/components/admin-ui-provi
 
 export const metadata: Metadata = {
   title: {
-    default: "Journal Studio — Dr. Renu Paul",
-    template: "%s — Journal Studio",
+    default: "Studio — Dr. Renu Paul",
+    template: "%s — Studio",
   },
-  description: "Private studio for the Dr. Renu Paul journal.",
+  description: "Private studio for the Dr. Renu Paul journal and library.",
   robots: {
     index: false,
     follow: false,

@@ -13,6 +13,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { AccountMenu } from "@/features/auth";
 import type { SiteHeaderContent } from "@/features/site/types/site-chrome";
 import { cn } from "@/lib/utils";
 import {
@@ -79,7 +80,8 @@ export function SiteHeader({ content }: SiteHeaderProps) {
           ))}
         </nav>
 
-        <div className="hidden md:block">
+        <div className="hidden items-center gap-2 md:flex">
+          <AccountMenu />
           <Button asChild className="h-11 px-5 text-micro uppercase text-card" size="lg">
             <a href={content.cta.href}>
               {content.cta.label}
@@ -88,52 +90,56 @@ export function SiteHeader({ content }: SiteHeaderProps) {
           </Button>
         </div>
 
-        <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
-          <SheetTrigger asChild className="md:hidden">
-            <Button aria-label="Open menu" size="icon" variant="outline">
-              <Menu aria-hidden className="size-4" />
-            </Button>
-          </SheetTrigger>
-          <SheetContent aria-describedby={undefined} side="right">
-            <SheetHeader>
-              <SheetTitle className="font-display uppercase tracking-[0.18em]">
-                {content.logotype}
-              </SheetTitle>
-            </SheetHeader>
+        <div className="flex items-center gap-2 md:hidden">
+          <AccountMenu className="h-10" />
 
-            <motion.nav
-              aria-label="Mobile"
-              animate="open"
-              className="mt-10 flex flex-col gap-6 px-4"
-              initial="closed"
-              variants={sheetNavVariants}
-            >
-              {content.navItems.map((item) => (
-                <motion.a
-                  key={item.href}
-                  className="flex items-baseline gap-3 font-display text-2xl"
-                  href={item.href}
-                  onClick={() => setIsMenuOpen(false)}
-                  variants={sheetNavItemVariants}
-                >
-                  <span className="text-micro text-gold">{item.index}</span>
-                  {item.label}
-                </motion.a>
-              ))}
-            </motion.nav>
-
-            <div className="mt-10 px-4">
-              <Button asChild className="h-12 w-full text-card uppercase">
-                <a
-                  href={content.cta.href}
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {content.cta.label}
-                </a>
+          <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
+            <SheetTrigger asChild>
+              <Button aria-label="Open menu" size="icon" variant="outline">
+                <Menu aria-hidden className="size-4" />
               </Button>
-            </div>
-          </SheetContent>
-        </Sheet>
+            </SheetTrigger>
+            <SheetContent aria-describedby={undefined} side="right">
+              <SheetHeader>
+                <SheetTitle className="font-display uppercase tracking-[0.18em]">
+                  {content.logotype}
+                </SheetTitle>
+              </SheetHeader>
+
+              <motion.nav
+                aria-label="Mobile"
+                animate="open"
+                className="mt-10 flex flex-col gap-6 px-4"
+                initial="closed"
+                variants={sheetNavVariants}
+              >
+                {content.navItems.map((item) => (
+                  <motion.a
+                    key={item.href}
+                    className="flex items-baseline gap-3 font-display text-2xl"
+                    href={item.href}
+                    onClick={() => setIsMenuOpen(false)}
+                    variants={sheetNavItemVariants}
+                  >
+                    <span className="text-micro text-gold">{item.index}</span>
+                    {item.label}
+                  </motion.a>
+                ))}
+              </motion.nav>
+
+              <div className="mt-10 px-4">
+                <Button asChild className="h-12 w-full text-card uppercase">
+                  <a
+                    href={content.cta.href}
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {content.cta.label}
+                  </a>
+                </Button>
+              </div>
+            </SheetContent>
+          </Sheet>
+        </div>
       </div>
       <ScrollProgress className="absolute inset-x-0 bottom-0" />
     </header>

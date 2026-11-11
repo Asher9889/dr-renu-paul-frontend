@@ -10,6 +10,7 @@ export const siteFooterContent: FooterContent = {
         { label: "Expertise", href: "/#expertise" },
         { label: "Achievements", href: "/#achievements" },
         { label: "Journal", href: "/blog" },
+        { label: "Books", href: "/books" },
       ],
     },
     {

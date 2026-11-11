@@ -7,8 +7,8 @@ export const siteHeaderContent: SiteHeaderContent = {
     { index: "01", label: "About", href: "/#physician" },
     { index: "02", label: "Expertise", href: "/#expertise" },
     { index: "03", label: "Achievements", href: "/#achievements" },
-    { index: "04", label: "Journal", href: "/blog" },
-    { index: "05", label: "Contact", href: "/#contact" },
+    { index: "04", label: "Blogs", href: "/blog" },
+    { index: "05", label: "Books", href: "/books" },
   ],
   cta: { label: "Book Appointment", href: "/#contact" },
 };

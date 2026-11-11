@@ -87,7 +87,91 @@ export const apiEndpoints = {
       },
     },
   },
+  publicBooks: {
+    list: {
+      method: HTTP_METHOD.GET,
+      path: "/books",
+    },
+    detail: {
+      method: HTTP_METHOD.GET,
+      path: "/books/:slug",
+    },
+    reader: {
+      method: HTTP_METHOD.GET,
+      path: "/books/:slug/reader",
+    },
+    access: {
+      method: HTTP_METHOD.GET,
+      path: "/books/:slug/access",
+    },
+    page: {
+      method: HTTP_METHOD.GET,
+      path: "/books/:slug/pages/:pageNumber",
+    },
+    purchase: {
+      method: HTTP_METHOD.POST,
+      path: "/books/:slug/purchase",
+    },
+    purchases: {
+      method: HTTP_METHOD.GET,
+      path: "/books/purchases",
+    },
+  },
+  adminBooks: {
+    posts: {
+      list: {
+        method: HTTP_METHOD.GET,
+        path: "/admin/books",
+      },
+      create: {
+        method: HTTP_METHOD.POST,
+        path: "/admin/books",
+      },
+      detail: {
+        method: HTTP_METHOD.GET,
+        path: "/admin/books/:id",
+      },
+      update: {
+        method: HTTP_METHOD.PATCH,
+        path: "/admin/books/:id",
+      },
+      publish: {
+        method: HTTP_METHOD.POST,
+        path: "/admin/books/:id/publish",
+      },
+      unpublish: {
+        method: HTTP_METHOD.POST,
+        path: "/admin/books/:id/unpublish",
+      },
+      archive: {
+        method: HTTP_METHOD.POST,
+        path: "/admin/books/:id/archive",
+      },
+      remove: {
+        method: HTTP_METHOD.DELETE,
+        path: "/admin/books/:id",
+      },
+      reprocess: {
+        method: HTTP_METHOD.POST,
+        path: "/admin/books/:id/reprocess",
+      },
+    },
+    media: {
+      cover: {
+        method: HTTP_METHOD.POST,
+        path: "/admin/books/media/cover",
+      },
+      ebook: {
+        method: HTTP_METHOD.POST,
+        path: "/admin/books/media/ebook",
+      },
+    },
+  },
   auth: {
+    google: {
+      method: HTTP_METHOD.GET,
+      path: "/auth/google",
+    },
     login: {
       method: HTTP_METHOD.POST,
       path: "/auth/login",

@@ -7,7 +7,10 @@ export const adminBlogContent = {
     viewSiteLabel: "View website",
     journalLabel: "Journal",
     journalIndex: "01",
+    booksLabel: "Books",
+    booksIndex: "02",
     newNoteLabel: "New note",
+    newBookLabel: "New book",
   },
   list: {
     eyebrow: "01 — The Journal",

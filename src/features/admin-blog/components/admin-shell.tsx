@@ -1,8 +1,12 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { ArrowUpRight, Plus } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import type { AdminBlogShellContent } from "@/features/admin-blog/types/admin-blog-content";
+import { cn } from "@/lib/utils";
 
 type AdminShellProps = {
   content: AdminBlogShellContent;
@@ -10,6 +14,9 @@ type AdminShellProps = {
 };
 
 export function AdminShell({ content, children }: AdminShellProps) {
+  const pathname = usePathname();
+  const isBooksSection = pathname.startsWith("/admin/books");
+
   return (
     <div className="flex min-h-svh flex-col bg-background">
       <header className="sticky top-0 z-40 border-b border-border bg-background/90 backdrop-blur">
@@ -28,14 +35,25 @@ export function AdminShell({ content, children }: AdminShellProps) {
 
             <nav
               aria-label="Studio"
-              className="hidden items-baseline gap-2 md:flex"
+              className="hidden items-baseline gap-6 md:flex"
             >
-              <span className="text-micro text-gold">{content.journalIndex}</span>
               <Link
-                className="text-micro font-medium uppercase text-foreground/80 transition-colors hover:text-foreground"
+                className="flex items-baseline gap-2 text-micro font-medium uppercase transition-colors hover:text-foreground"
                 href="/admin/blogs"
               >
-                {content.journalLabel}
+                <span className="text-gold">{content.journalIndex}</span>
+                <span className={cn(isBooksSection ? "text-foreground/70" : "text-foreground")}>
+                  {content.journalLabel}
+                </span>
+              </Link>
+              <Link
+                className="flex items-baseline gap-2 text-micro font-medium uppercase transition-colors hover:text-foreground"
+                href="/admin/books"
+              >
+                <span className="text-gold">{content.booksIndex}</span>
+                <span className={cn(isBooksSection ? "text-foreground" : "text-foreground/70")}>
+                  {content.booksLabel}
+                </span>
               </Link>
             </nav>
           </div>
@@ -51,9 +69,11 @@ export function AdminShell({ content, children }: AdminShellProps) {
               </Link>
             </Button>
             <Button asChild size="sm">
-              <Link href="/admin/blogs/new">
+              <Link href={isBooksSection ? "/admin/books/new" : "/admin/blogs/new"}>
                 <Plus data-icon="inline-start" />
-                <span className="hidden sm:inline">{content.newNoteLabel}</span>
+                <span className="hidden sm:inline">
+                  {isBooksSection ? content.newBookLabel : content.newNoteLabel}
+                </span>
               </Link>
             </Button>
           </div>
