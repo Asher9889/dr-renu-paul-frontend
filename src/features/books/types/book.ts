@@ -5,6 +5,7 @@ import type {
   bookProcessingSchema,
   bookProcessingStatusSchema,
   bookPurchaseResponseSchema,
+  bookPurchaseOrderResponseSchema,
   bookPurchaseSchema,
   bookReaderResponseSchema,
   publicBookDetailSchema,
@@ -22,3 +23,4 @@ export type BookReader = z.infer<typeof bookReaderResponseSchema>["data"];
 export type BookPurchase = z.infer<typeof bookPurchaseSchema>;
 export type BookAccessResult = z.infer<typeof bookAccessResponseSchema>["data"];
 export type BookPurchaseResult = z.infer<typeof bookPurchaseResponseSchema>["data"];
+export type BookPurchaseOrderResult = z.infer<typeof bookPurchaseOrderResponseSchema>["data"];

@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense } from "react";
+import { Suspense, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -54,8 +54,10 @@ function AccountMenuPlaceholder({ className }: { className?: string }) {
 function AccountMenuContent({ align = "end", className }: AccountMenuProps) {
   const pathname = usePathname();
   const { user, isPending } = useCurrentUser();
+  console.log("AccountMenuContent user", user);
   const signOut = useSignOut();
   const copy = authContent.account;
+  const [avatarFailed, setAvatarFailed] = useState(false);
 
   if (pathname === SIGN_IN_PATH) return null;
 
@@ -95,12 +97,13 @@ function AccountMenuContent({ align = "end", className }: AccountMenuProps) {
           size="lg"
           variant="ghost"
         >
-          {user.avatarUrl ? (
+          {user.avatarUrl && !avatarFailed ? (
             <Image
-              alt=""
+              alt="User image"
               aria-hidden
               className="size-7 shrink-0 rounded-full object-cover"
               height={28}
+              onError={() => setAvatarFailed(true)}
               src={user.avatarUrl}
               unoptimized
               width={28}

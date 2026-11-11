@@ -101,9 +101,10 @@ export const bookPurchaseSchema = z.object({
   userId: z.string().nullable(),
   amount: z.number(),
   currency: z.string(),
-  status: z.enum(["PENDING", "paid", "refunded", "cancelled"]),
+  status: z.enum(["PENDING", "PAID", "REFUNDED", "CANCELLED"]),
   provider: z.string(),
   providerReference: z.string().nullable(),
+  providerPaymentId: z.string().nullable().optional(),
   purchasedAt: z.string().nullable(),
   createdAt: z.string(),
 });
@@ -124,6 +125,20 @@ export const bookPurchaseResponseSchema = z.object({
     purchase: bookPurchaseSchema,
     access: bookAccessSchema,
   }),
+});
+export const bookPurchaseOrderSchema = z.object({
+  orderId: z.string(),
+  amount: z.number(),
+  currency: z.string(),
+  keyId: z.string(),
+  purchase: bookPurchaseSchema,
+  access: bookAccessSchema,
+});
+
+export const bookPurchaseOrderResponseSchema = z.object({
+  success: z.literal(true),
+  message: z.string(),
+  data: bookPurchaseOrderSchema,
 });
 
 export const bookApiErrorSchema = z.object({

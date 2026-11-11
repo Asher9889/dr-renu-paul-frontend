@@ -108,9 +108,13 @@ export const apiEndpoints = {
       method: HTTP_METHOD.GET,
       path: "/books/:slug/pages/:pageNumber",
     },
-    purchase: {
+    purchaseOrder: {
       method: HTTP_METHOD.POST,
-      path: "/books/:slug/purchase",
+      path: "/books/:slug/purchase/order",
+    },
+    purchaseVerify: {
+      method: HTTP_METHOD.POST,
+      path: "/books/:slug/purchase/verify",
     },
     purchases: {
       method: HTTP_METHOD.GET,

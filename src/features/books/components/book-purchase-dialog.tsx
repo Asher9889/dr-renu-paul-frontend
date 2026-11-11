@@ -16,12 +16,11 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { getPublicBookError } from "../api/get-public-book-error";
 import { useBookPurchaseGate } from "../hooks/use-book-purchase-gate";
-import { usePurchaseBook } from "../hooks/use-purchase-book";
+import { useDisplayRazorpay, PaymentCancelledError } from "../hooks/use-purchase-book";
 import { formatBookPrice } from "../lib/format-book-price";
 import type { BookAccess, BookSummary } from "../types/book";
 
-type PurchasableBook = Pick<
-  BookSummary,
+type PurchasableBook = Pick<BookSummary,
   "slug" | "title" | "freePreviewPages" | "totalPages" | "price" | "currency"
 >;
 
@@ -32,13 +31,8 @@ type BookPurchaseDialogProps = {
   onOpenChange: (open: boolean) => void;
 };
 
-export function BookPurchaseDialog({
-  book,
-  access,
-  open,
-  onOpenChange,
-}: BookPurchaseDialogProps) {
-  const purchase = usePurchaseBook(book.slug);
+export function BookPurchaseDialog({book, access, open, onOpenChange }: BookPurchaseDialogProps) {
+  const { displayRazorpay, isPending } = useDisplayRazorpay(book.slug);
   const gate = useBookPurchaseGate(book.slug);
   const [error, setError] = useState<string | null>(null);
 
@@ -53,23 +47,26 @@ export function BookPurchaseDialog({
     const isSignedIn = await gate.requireSignedIn();
     if (!isSignedIn) return;
 
-    purchase.mutate(undefined, {
-      onSuccess: () => {
-        toast.success("The complete edition is now open.", {
-          description: `All ${totalPages} pages are available in the reader.`,
-        });
-        onOpenChange(false);
-      },
-      onError: (purchaseError) => {
-        setError(getPublicBookError(purchaseError).message);
-      },
-    });
+    // The dialog overlay (z-50) sits above Razorpay's checkout iframe and
+    // blocks clicks, so close it before opening the payment modal.
+    onOpenChange(false);
+
+    try {
+      await displayRazorpay();
+      toast.success("The complete edition is now open.", {
+        description: `All ${totalPages} pages are available in the reader.`,
+      });
+    } catch (purchaseError) {
+      if (purchaseError instanceof PaymentCancelledError) return;
+      onOpenChange(true);
+      setError(getPublicBookError(purchaseError).message);
+    }
   }
 
   return (
     <Dialog
       onOpenChange={(nextOpen) => {
-        if (purchase.isPending) return;
+        if (isPending) return;
         setError(null);
         onOpenChange(nextOpen);
       }}
@@ -136,7 +133,7 @@ export function BookPurchaseDialog({
 
         <DialogFooter className="mx-0 mb-0 rounded-b-sm border-border bg-secondary/50 px-6 py-4">
           <Button
-            disabled={purchase.isPending}
+            disabled={isPending}
             onClick={() => onOpenChange(false)}
             type="button"
             variant="ghost"
@@ -144,13 +141,13 @@ export function BookPurchaseDialog({
             Keep reading the preview
           </Button>
           <Button
-            disabled={purchase.isPending}
+            disabled={isPending}
             onClick={() => {
               void handlePurchase();
             }}
             type="button"
           >
-            {purchase.isPending
+            {isPending
               ? "Completing purchase…"
               : `Unlock for ${formatBookPrice(price, currency)}`}
           </Button>

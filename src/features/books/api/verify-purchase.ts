@@ -3,12 +3,21 @@ import { apiEndpoints, buildApiPath } from "@/config/apiEndPoints";
 import { bookPurchaseResponseSchema } from "../schema/public-book.schema";
 import type { BookPurchaseResult } from "../types/book";
 
-export async function purchaseBook(slug: string): Promise<BookPurchaseResult> {
-  const endpoint = apiEndpoints.publicBooks.purchase;
+export type VerifyPurchasePayload = {
+  razorpay_order_id: string;
+  razorpay_payment_id: string;
+  razorpay_signature: string;
+};
+
+export async function verifyPurchase(
+  slug: string,
+  payload: VerifyPurchasePayload,
+): Promise<BookPurchaseResult> {
+  const endpoint = apiEndpoints.publicBooks.purchaseVerify;
   const response = await apiClient.request({
     method: endpoint.method,
     url: buildApiPath(endpoint.path, { slug }),
-    data: {},
+    data: payload,
   });
   return bookPurchaseResponseSchema.parse(response.data).data;
 }
